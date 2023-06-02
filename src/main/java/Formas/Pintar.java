@@ -4,8 +4,10 @@
  */
 package Formas;
 
+
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -16,9 +18,8 @@ import javax.swing.border.Border;
  * @author Jonna
  */
 public class Pintar extends javax.swing.JFrame {
-
-    int x = 100;
-    int y = 100;
+    
+  PanelDibujar panelDePelotas;
     
     
     
@@ -27,7 +28,8 @@ public class Pintar extends javax.swing.JFrame {
         initComponents();
         this.setBounds(0, 0, 600, 500);
         this.setLocationRelativeTo(null);
-        this.panelPelota.add(new panelDibujar());
+        panelDePelotas = new PanelDibujar();
+        this.panelPelota.add(panelDePelotas);
         
         
     }
@@ -98,9 +100,11 @@ public class Pintar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNuevaPelotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNuevaPelotaActionPerformed
-        x += 10;
-        y += 10;
-        JOptionPane.showMessageDialog(this, "x: " + x + " y: " + y);
+       
+       Pelota pelota = new Pelota();
+       //panelDePelotas.add(pelota);
+       pelota.moverPelota(panelDePelotas.getBounds());
+       
     }//GEN-LAST:event_btNuevaPelotaActionPerformed
 
     /**
@@ -139,15 +143,34 @@ public class Pintar extends javax.swing.JFrame {
         });
     }
 
-    public class panelDibujar extends JPanel{
-        public panelDibujar(){
+    public class PanelDibujar extends JPanel{
+
+       
+        public PanelDibujar(){
             setBounds(0,0,panelPelota.getWidth(),354);
             setBackground(new Color(18,46,194));
             setLocationRelativeTo(null);
             this.setBorder(new BevelBorder(BevelBorder.LOWERED));
             
+        }     
+        
+    }
+    
+    public class Pelota{
+        private double x=0.00;
+        private double y=0.00;
+        private double dx=1.00;
+        private double dy=1.00;
+        
+        
+        
+        public void moverPelota(Rectangle2D limites){
+            x += dx;
+            y += dy;
         }
     }
+    
+    
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
