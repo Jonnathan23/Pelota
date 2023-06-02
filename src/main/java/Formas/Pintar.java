@@ -4,10 +4,14 @@
  */
 package Formas;
 
-
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -18,20 +22,16 @@ import javax.swing.border.Border;
  * @author Jonna
  */
 public class Pintar extends javax.swing.JFrame {
-    
-  PanelDibujar panelDePelotas;
-    
-    
-    
+
+    PanelDibujar panelDePelotas;
 
     public Pintar() {
         initComponents();
         this.setBounds(0, 0, 600, 500);
         this.setLocationRelativeTo(null);
         panelDePelotas = new PanelDibujar();
-        this.panelPelota.add(panelDePelotas);
-        
-        
+        this.marcoPelotas.add(panelDePelotas);
+
     }
 
     /**
@@ -44,8 +44,7 @@ public class Pintar extends javax.swing.JFrame {
     private void initComponents() {
 
         btNuevaPelota = new javax.swing.JButton();
-        btCerrar = new javax.swing.JButton();
-        panelPelota = new javax.swing.JPanel();
+        marcoPelotas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,16 +55,14 @@ public class Pintar extends javax.swing.JFrame {
             }
         });
 
-        btCerrar.setText("Cerrar");
-
-        javax.swing.GroupLayout panelPelotaLayout = new javax.swing.GroupLayout(panelPelota);
-        panelPelota.setLayout(panelPelotaLayout);
-        panelPelotaLayout.setHorizontalGroup(
-            panelPelotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout marcoPelotasLayout = new javax.swing.GroupLayout(marcoPelotas);
+        marcoPelotas.setLayout(marcoPelotasLayout);
+        marcoPelotasLayout.setHorizontalGroup(
+            marcoPelotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 546, Short.MAX_VALUE)
         );
-        panelPelotaLayout.setVerticalGroup(
-            panelPelotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        marcoPelotasLayout.setVerticalGroup(
+            marcoPelotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
@@ -75,24 +72,20 @@ public class Pintar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(panelPelota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(marcoPelotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(37, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(104, 104, 104)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btNuevaPelota, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+                .addGap(208, 208, 208))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelPelota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(marcoPelotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btNuevaPelota, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btNuevaPelota, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
 
@@ -100,12 +93,31 @@ public class Pintar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNuevaPelotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNuevaPelotaActionPerformed
-       
-       Pelota pelota = new Pelota();
-       //panelDePelotas.add(pelota);
-       pelota.moverPelota(panelDePelotas.getBounds());
-       
+        HiloMoverPelota h1 = new HiloMoverPelota();
+        h1.start();
+
     }//GEN-LAST:event_btNuevaPelotaActionPerformed
+
+    public class HiloMoverPelota extends Thread {
+
+        @Override
+        public void run() {
+            Pelota pelota = new Pelota();
+            //panelDePelotas.add(pelota);
+
+            panelDePelotas.aumentarPelotas(pelota);
+            for (int i = 1; i <= 3000; i++) {
+                try {
+                    Thread.sleep(4);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Pintar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                pelota.moverPelota(panelDePelotas.getBounds());
+                panelDePelotas.paint(panelDePelotas.getGraphics());
+
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -143,40 +155,94 @@ public class Pintar extends javax.swing.JFrame {
         });
     }
 
-    public class PanelDibujar extends JPanel{
+    public class PanelDibujar extends JPanel {
 
-       
-        public PanelDibujar(){
-            setBounds(0,0,panelPelota.getWidth(),354);
-            setBackground(new Color(18,46,194));
+        private ArrayList<Pelota> pelotas = new ArrayList<Pelota>();
+
+        public PanelDibujar() {
+            setBounds(0, 0, marcoPelotas.getWidth(), 354);
+            setBackground(new Color(163,228,215));
             setLocationRelativeTo(null);
             this.setBorder(new BevelBorder(BevelBorder.LOWERED));
-            
-        }     
-        
+
+        }
+
+        public void aumentarPelotas(Pelota p) {
+            pelotas.add(p);
+
+        }
+
+        public void paintComponent(Graphics g) {
+
+            super.paintComponent(g);
+
+            Graphics2D g2 = (Graphics2D) g;
+
+            for (Pelota p : pelotas) {
+
+                g2.fill(p.getShape());
+            }
+
+        }
+
     }
-    
-    public class Pelota{
-        private double x=0.00;
-        private double y=0.00;
-        private double dx=1.00;
-        private double dy=1.00;
-        
-        
-        
-        public void moverPelota(Rectangle2D limites){
+
+    public class Pelota {
+
+        private static final int TAMX = 15;
+        private static final int TAMY = 15;
+
+        private double x = 0.00;
+        private double y = 0.00;
+        private double dx = 1.00;
+        private double dy = 1.00;
+
+        public void moverPelota(Rectangle2D limites) {
             x += dx;
             y += dy;
+
+            if (x < limites.getMinX()) {
+
+                x = limites.getMinX();
+
+                dx = -dx;
+            }
+
+            if (x + TAMX >= limites.getMaxX()) {
+
+                x = limites.getMaxX() - TAMX;
+
+                dx = -dx;
+            }
+
+            if (y < limites.getMinY()) {
+
+                y = limites.getMinY();
+
+                dy = -dy;
+            }
+
+            if (y + TAMY >= limites.getMaxY()) {
+
+                y = limites.getMaxY() - TAMY;
+
+                dy = -dy;
+
+            }
+
+        }
+
+        public Ellipse2D getShape() {
+
+            return new Ellipse2D.Double(x, y, TAMX, TAMY);
+
         }
     }
-    
-    
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btCerrar;
     private javax.swing.JButton btNuevaPelota;
-    private javax.swing.JPanel panelPelota;
+    private javax.swing.JPanel marcoPelotas;
     // End of variables declaration//GEN-END:variables
 
 }

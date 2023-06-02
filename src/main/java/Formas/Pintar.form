@@ -25,15 +25,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-              <Component id="panelPelota" min="-2" max="-2" attributes="0"/>
+              <Component id="marcoPelotas" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="37" max="32767" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
-              <Component id="btNuevaPelota" min="-2" pref="157" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="btCerrar" min="-2" pref="157" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+              <Component id="btNuevaPelota" min="-2" pref="157" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="208" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -41,12 +39,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="panelPelota" max="32767" attributes="0"/>
+              <Component id="marcoPelotas" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btNuevaPelota" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
-                  <Component id="btCerrar" alignment="3" min="-2" pref="52" max="-2" attributes="0"/>
-              </Group>
+              <Component id="btNuevaPelota" min="-2" pref="52" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -61,12 +56,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNuevaPelotaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btCerrar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Cerrar"/>
-      </Properties>
-    </Component>
-    <Container class="javax.swing.JPanel" name="panelPelota">
+    <Container class="javax.swing.JPanel" name="marcoPelotas">
 
       <Layout>
         <DimensionLayout dim="0">
