@@ -175,6 +175,8 @@ public class Pintar extends javax.swing.JFrame {
         public void paintComponent(Graphics g) {
 
             super.paintComponent(g);
+            g.setColor(Color.red);
+            g.setColor(new Color(84,153,199));
 
             Graphics2D g2 = (Graphics2D) g;
 
